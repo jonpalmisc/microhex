@@ -36,10 +36,12 @@
 
 #define UHEX_DUMP_LINE_LENGTH 16
 
-static void uhex_print_dump_line(unsigned char* buffer, size_t length)
+static void uhex_print_dump_line(unsigned char* buffer, size_t length, size_t address)
 {
+	printf("%08zx:  ", address);
+
 	for (size_t i = 0; i < UHEX_DUMP_LINE_LENGTH; ++i) {
-		if (i > 0 && i % 4 == 0)
+		if (i > 0 && i % 8 == 0)
 			printf(" ");
 
 		if (i < length)
@@ -61,18 +63,18 @@ static void uhex_print_dump_line(unsigned char* buffer, size_t length)
 	printf("\n");
 }
 
-void uhex_print_dump(unsigned char* buffer, size_t length)
+void uhex_print_dump(unsigned char* buffer, size_t length, size_t base)
 {
 	size_t offset = 0;
 
 	while (length - offset >= UHEX_DUMP_LINE_LENGTH) {
-		uhex_print_dump_line(buffer + offset, UHEX_DUMP_LINE_LENGTH);
+		uhex_print_dump_line(buffer + offset, UHEX_DUMP_LINE_LENGTH, base + offset);
 		offset += UHEX_DUMP_LINE_LENGTH;
 	}
 
 	size_t remainder = length - offset;
 	if (remainder > 0)
-		uhex_print_dump_line(buffer + offset, remainder);
+		uhex_print_dump_line(buffer + offset, remainder, base + offset);
 }
 
 void uhex_print_raw(unsigned char* buffer, size_t length)

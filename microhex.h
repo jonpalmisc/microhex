@@ -39,7 +39,7 @@ extern "C" {
 #endif
 
 /// Print a buffer as a formatted hex dump.
-void uhex_print_dump(unsigned char* buffer, size_t length);
+void uhex_print_dump(unsigned char* buffer, size_t length, size_t base);
 
 /// Print a buffer as a single line hex string.
 void uhex_print_raw(unsigned char* buffer, size_t length);
